@@ -11,7 +11,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 
 # 生成可执行文件
 add_executable(${PROJECT_NAME} ${SRC_DIR})
-
+# 设置install规则
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 
 # 链接 pthread库
 set(THREADS_PREFER_PTHREAD_FLAG ON)
