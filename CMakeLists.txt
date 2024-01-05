@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.10) 
 # set the project name 
-project(BAK) 
+project(allbackup) 
 message(STATUS "### Begin to configure project BUT ###")
+
+# 设置install路径前缀
+SET(CMAKE_INSTALL_PREFIX /usr/local)
 
 # C++标准
 set(CMAKE_CXX_STANDARD 11)
