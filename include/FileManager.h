@@ -5,7 +5,6 @@
 #include <iostream>
 #include <queue>
 #include <string>
-class FileHeader {};
 class File {
  private:
   std::string path;

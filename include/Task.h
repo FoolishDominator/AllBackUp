@@ -5,13 +5,13 @@
 
 class Task {
  private:
-  std::string from;
-  std::string to;
-  std::string mode;
+  std::string arg1;
+  std::string arg2;
+  std::string arg3;
 
  public:
-  Task(std::string from, std::string to, std::string mode)
-      : from(from), to(to), mode(mode){};
+  Task(std::string arg1, std::string arg2, std::string arg3)
+      : arg1(arg1), arg2(arg2), arg3(arg3){};
   void check_argv();
   void back_up();
   void recover();

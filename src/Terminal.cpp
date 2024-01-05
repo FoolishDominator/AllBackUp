@@ -9,7 +9,7 @@ void Terminal::showHelp() {
             << "Options:\n"
             << "  -h, --help       Show this help message\n"
             << "  -v, --version    Show Version\n"
-            << "  -b [from] [to], --backup     Start Backup\n"
+            << "  -b [from] [to] [bakname], --backup     Start Backup\n"
             << "  -r [from] [to], --recover    Start Recovery\n";
 }
 void Terminal::showVersion() { std::cout << "CLI Tool Version 1.0\n"; }
@@ -34,9 +34,9 @@ int main(int argc, char* argv[]) {
     // task.checkArgv();
     task.back_up();
   } else if (arg1 == "-r" || arg1 == "--recover") {
-    std::string arg2 = (argv[2] == NULL) ? (NULL) : (argv[2]);
-    std::string arg3 = (argv[3] == NULL) ? (NULL) : (argv[3]);
-    std::string arg4 = (argv[4] == NULL) ? (NULL) : (argv[4]);
+    std::string arg2 = (argv[2] == NULL) ? ("") : (argv[2]);
+    std::string arg3 = (argv[3] == NULL) ? ("") : (argv[3]);
+    std::string arg4 = (argv[4] == NULL) ? ("") : (argv[4]);
     Task task(arg2, arg3, arg4);
     // task.checkArgv();
     task.recover();

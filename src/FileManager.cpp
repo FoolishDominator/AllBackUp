@@ -35,7 +35,12 @@ int FileManager::read_dir(std::string path) {
   while (cur_dirent->d_reclen) {
     // 拼接获得子文件的路径
     std::string file_name = cur_dirent->d_name;
-    std::string file_path = path + "/" + file_name;
+    std::string file_path;
+    if (path.back() != '/')
+      file_path = path + "/" + file_name;
+    else
+      file_path = path + file_name;
+
     // 获取子文件的属性
     struct stat s;
     lstat(file_path.c_str(), &s);
