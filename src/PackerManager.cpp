@@ -1,10 +1,11 @@
-#include "Packer.h"
+#include "PackerManager.h"
 
 #include <errno.h>
 #include <string.h>
 #include <sys/stat.h>
 
 #include "FileManager.h"
+#include "colorful.h"
 struct FileHeader {
   char sub_path[512];
   struct stat s;
@@ -15,12 +16,20 @@ void Packer::pack() {
     if (!S_ISDIR(file->get_stat().st_mode)) {
       bool whs = write_header(file);
       bool wds = write_data(file);
-      std::cout << "FILE|" << file->get_path() << "|"
-                << ((whs && wds) ? "TRUE" : "FALSE") << std::endl;
+      BLUE_WITHOUTENTER("FILE|");
+      std::cout << file->get_path();
+      if (whs && wds)
+        GREEN("|TRUE");
+      else
+        RED("|FALSE");
     } else {
       bool whs = write_header(file);
-      std::cout << "DIR|" << file->get_path() << "|"
-                << ((whs) ? "TRUE" : "FALSE") << std::endl;
+      BLUE_WITHOUTENTER("DIR|");
+      std::cout << file->get_path();
+      if (whs)
+        GREEN("|TRUE");
+      else
+        RED("|FALSE");
     }
     fm->next_file();
   }
@@ -98,16 +107,23 @@ void UnPacker::unpack() {
     struct stat s = fileheader.s;
     if (!S_ISDIR(s.st_mode)) {
       bool wds = this->read_data(target_path, s.st_size);
-      std::cout << "FILE|" << target_path << "|" << (wds ? "TRUE" : "FALSE")
-                << std::endl;
+      BLUE_WITHOUTENTER("FILE|");
+      std::cout << target_path;
+      if (wds)
+        GREEN("|TRUE");
+      else
+        RED("|FALSE");
     } else {
       mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH |
                     S_IXUSR | S_IXGRP | S_IXOTH;
-
       bool wds;
       if (mkdir(target_path.c_str(), mode) == 0) wds = true;
-      std::cout << "DIR|" << target_path << "|" << (wds ? "TRUE" : "FALSE")
-                << std::endl;
+      BLUE_WITHOUTENTER("DIR|");
+      std::cout << target_path;
+      if (wds)
+        GREEN("|TRUE");
+      else
+        RED("|FALSE");
     }
   }
 }
