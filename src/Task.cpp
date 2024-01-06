@@ -1,13 +1,16 @@
 #include "Task.h"
 
+#include <stdlib.h>
+
 #include <string>
 
+#include "AlarmManager.h"
 #include "EncryptManager.h"
 #include "FileManager.h"
 #include "PackerManager.h"
 #include "colorful.h"
 bool Task::check_argv() {
-  if (this->arg1 == "-b") {
+  if (this->arg1 == "-b" || this->arg1 == "--backup") {
     if (access(arg2.c_str(), F_OK) == -1) {
       RED("The dir in arg2 is not exist");
       return false;
@@ -16,18 +19,40 @@ bool Task::check_argv() {
       RED("The dir in arg3 is not exist");
       return false;
     }
-    if (this->arg5 != "-s" || this->arg5 != "") {
+    if (this->arg5 != "-s" && this->arg5 != "") {
       RED("Unknow Option");
       return false;
     }
   }
-  if (this->arg1 == "-r") {
+  if (this->arg1 == "-r" || this->arg1 == "--recover") {
     if (access(arg2.c_str(), F_OK) == -1) {
       RED("The file in arg2 is not exist");
       return false;
     }
     if (access(arg3.c_str(), F_OK) == -1) {
       RED("The dir in arg3 is not exist");
+      return false;
+    }
+  }
+  if (this->arg1 == "-a" || this->arg1 == "--alarm") {
+    if (access(arg2.c_str(), F_OK) == -1) {
+      RED("The file in arg2 is not exist");
+      return false;
+    }
+    if (access(arg3.c_str(), F_OK) == -1) {
+      RED("The dir in arg3 is not exist");
+      return false;
+    }
+    if (atoi(arg5.c_str()) < 0 || atoi(arg5.c_str()) > 23) {
+      RED("The hour is illegal");
+      return false;
+    }
+    if (atoi(arg6.c_str()) < 0 || atoi(arg6.c_str()) > 59) {
+      RED("The minute is illegal");
+      return false;
+    }
+    if (this->arg7 != "-s" && this->arg7 != "") {
+      RED("Unknow Option");
       return false;
     }
   }
@@ -60,5 +85,14 @@ void Task::recover() {
   } else {
     UnPacker unpacker(this->arg2, this->arg3);
     unpacker.unpack();
+  }
+}
+void Task::alarm() {
+  if (arg7 == "-s") {
+    Alarm alarm(arg2, arg3, arg4, atoi(arg5.c_str()), atoi(arg6.c_str()), arg8);
+    alarm.start_alarm();
+  } else {
+    Alarm alarm(arg2, arg3, arg4, atoi(arg5.c_str()), atoi(arg6.c_str()), "");
+    alarm.start_alarm();
   }
 }
