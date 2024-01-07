@@ -7,6 +7,7 @@
 #include "AlarmManager.h"
 #include "EncryptManager.h"
 #include "FileManager.h"
+#include "FilterManager.h"
 #include "PackerManager.h"
 #include "ZipManager.h"
 #include "colorful.h"
@@ -75,6 +76,12 @@ bool Task::check_argv() {
 void Task::back_up() {
   FileManager fm;
   fm.read_dir(this->arg2);
+  if (this->arg8 == "-c") {
+    Config config;
+    config.parse_config(this->arg9);
+    Filter filter(&fm, &config);
+    filter.filter();
+  }
   Packer packer(this->arg2, this->arg3, this->arg4, &fm);
   packer.pack();
 
