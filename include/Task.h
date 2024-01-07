@@ -3,8 +3,9 @@
 #include <iostream>
 #include <string>
 
-class Task {
- private:
+class Task
+{
+private:
   std::string arg1;
   std::string arg2;
   std::string arg3;
@@ -14,7 +15,7 @@ class Task {
   std::string arg7;
   std::string arg8;
 
- public:
+public:
   Task(std::string arg1, std::string arg2, std::string arg3, std::string arg4,
        std::string arg5, std::string arg6, std::string arg7, std::string arg8)
       : arg1(arg1),
