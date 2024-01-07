@@ -2,6 +2,7 @@
 
 #include "EncryptManager.h"
 #include "PackerManager.h"
+#include "Task.h"
 
 Alarm* Alarm::instance = nullptr;
 void Alarm::handle_sigalrm(int sig) {
@@ -14,19 +15,35 @@ void Alarm::handle_sigalrm(int sig) {
   std::cout << "Backup started at " << buf;
   std::string new_bak_name = instance->bak_name + buf;
 
-    FileManager fm;
-  fm.read_dir(instance->from);
-  Packer packer(instance->from, instance->to, new_bak_name, &fm);
-  packer.pack();
-
-  std::string file_path = instance->to + new_bak_name + ".bak";
+  std::string argv1 = "-b";
+  std::string argv2 = instance->from;
+  std::string argv3 = instance->to;
+  std::string argv4 = new_bak_name;
+  std::string argv5 = "";
+  std::string argv6 = "";
+  std::string argv7 = "";
+  std::string argv8 = "";
+  std::string argv9 = "";
   if (instance->password != "") {
-    Encryptor encryptor(file_path, instance->password);
-    encryptor.encrypt();
-    unlink(file_path.c_str());
-    file_path = instance->to + new_bak_name + ".sbak";
+    argv5 = "-s";
+    argv6 = instance->password;
   }
+  if (instance->need_zip == true) {
+    argv7 = "-z";
+  }
+  Task task(argv1, argv2, argv3, argv4, argv5, argv6, argv7, argv8, argv9);
+  if (task.check_argv()) task.back_up();
 
+  std::string file_path;
+  if (instance->password != "" && instance->need_zip) {
+    file_path = instance->to + new_bak_name + ".szbak";
+  } else if (instance->password != "") {
+    file_path = instance->to + new_bak_name + ".sbak";
+  } else if (instance->need_zip) {
+    file_path = instance->to + new_bak_name + ".zbak";
+  } else {
+    file_path = instance->to + new_bak_name + ".bak";
+  }
   if (instance->old_exist) {
     unlink(file_path.c_str());
     instance->old_path = new_bak_name;

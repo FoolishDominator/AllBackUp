@@ -24,18 +24,20 @@ class Alarm {
   std::string bak_name;
   std::string old_path;
   std::string password;
+  bool need_zip;
   bool old_exist;
 
  public:
   Alarm(std::string from, std::string to, std::string bak_name, int hour,
-        int min, std::string password)
+        int min, std::string password, bool need_zip)
       : from(from),
         to(to),
         bak_name(bak_name),
         hour(hour),
         min(min),
         password(password),
-        old_exist(false) {
+        old_exist(false),
+        need_zip(need_zip) {
     instance = this;
   };
   ~Alarm() { instance = NULL; };
