@@ -39,6 +39,17 @@ FileType gettype(struct FileHeader fileheader)
   }
 }
 
+void restoreMeta(const char *filepath, struct stat metadata)
+{
+  // 还原权限
+  chmod(filepath, metadata.st_mode);
+  // 还原用户和组
+  lchown(filepath, metadata.st_uid, metadata.st_gid);
+  // 还原时间戳
+  timespec tim[2] = {metadata.st_atim, metadata.st_mtim};
+  utimensat(AT_FDCWD, filepath, tim, AT_SYMLINK_NOFOLLOW);
+}
+
 void Packer::pack()
 {
   File *file;
@@ -261,5 +272,7 @@ void UnPacker::unpack()
     default:
       break;
     }
+
+    restoreMeta(target_path.c_str(), s);
   }
 }
