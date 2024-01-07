@@ -30,6 +30,7 @@ public:
   void back_up();
   void recover();
   void alarm();
+  void zip();
 };
 
 #endif

@@ -11,9 +11,8 @@
 #include "FileManager.h"
 
 #define BUFFERSIZE 4096
-class Packer
-{
-private:
+class Packer {
+ private:
   FileManager *fm;
   std::string from;
   std::string to;
@@ -22,13 +21,10 @@ private:
   bool write_header(File *file);
   bool write_data(File *file);
 
-public:
+ public:
   Packer(std::string from, std::string to, std::string bak_name,
          FileManager *fm)
-      : from(from), to(to), fm(fm), bak_name(bak_name)
-  {
-    if (this->to.back() != '/')
-      this->to += '/';
+      : from(from), to(to), fm(fm), bak_name(bak_name) {
     // 新建一个文件用于打包
     std::string file_path = to + bak_name + ".bak";
     mode_t mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH;
@@ -39,20 +35,16 @@ public:
   void pack();
 };
 
-class UnPacker
-{
-private:
+class UnPacker {
+ private:
   std::string bak_path;
   std::string to;
   int fd;
   bool read_header(char *buffer);
   bool read_data(std::string targetpath, int size);
 
-public:
-  UnPacker(std::string bak_path, std::string to) : to(to), bak_path(bak_path)
-  {
-    if (this->to.back() != '/')
-      this->to += '/';
+ public:
+  UnPacker(std::string bak_path, std::string to) : to(to), bak_path(bak_path) {
     fd = open(bak_path.c_str(), O_RDWR);
     // fm进行初始化
   };

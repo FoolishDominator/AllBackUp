@@ -23,3 +23,8 @@ target_link_libraries(${PROJECT_NAME} Threads::Threads)
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 target_link_libraries(${PROJECT_NAME} OpenSSL::Crypto)
+
+#  链接openssl
+set(ZLIB_USE_STATIC_LIBS TRUE)
+find_package(ZLIB REQUIRED)
+target_link_libraries(${PROJECT_NAME} ZLIB::ZLIB)

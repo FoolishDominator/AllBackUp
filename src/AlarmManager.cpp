@@ -13,7 +13,8 @@ void Alarm::handle_sigalrm(int sig) {
   strftime(buf, sizeof(buf), "%F %X", local_time);
   std::cout << "Backup started at " << buf;
   std::string new_bak_name = instance->bak_name + buf;
-  FileManager fm;
+
+    FileManager fm;
   fm.read_dir(instance->from);
   Packer packer(instance->from, instance->to, new_bak_name, &fm);
   packer.pack();

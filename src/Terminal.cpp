@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
   std::string arg4 = (argv[4] == NULL) ? ("") : (argv[4]);
   std::string arg5 = (argv[5] == NULL) ? ("") : (argv[5]);
   std::string arg6 = (argv[6] == NULL) ? ("") : (argv[6]);
-  std::string arg7 = (argv[6] == NULL) ? ("") : (argv[7]);
-  std::string arg8 = (argv[6] == NULL) ? ("") : (argv[8]);
+  std::string arg7 = (argv[7] == NULL) ? ("") : (argv[7]);
+  std::string arg8 = (argv[8] == NULL) ? ("") : (argv[8]);
 
   Task task(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   if (arg1 == "-h" || arg1 == "--help") {
