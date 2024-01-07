@@ -16,3 +16,12 @@ sudo make install
 ```shell
 sudo xargs rm < install_manifest.txt
 ```
+## docker
+切换到项目根目录,构建镜像
+```shell
+sudo docker build -t allbackup .
+```
+启动容器
+```shell
+sudo docker run -it --name backuptest allbackup /bin/bash
+```
