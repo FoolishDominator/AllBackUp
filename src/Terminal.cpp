@@ -4,8 +4,9 @@
 #include <string>
 
 #include "Task.h"
-void Terminal::showHelp() {
-  std::cout << "Usage: cli_tool [option]\n"
+void Terminal::showHelp()
+{
+  std::cout << "Usage: allbackup [option]\n"
             << "Options:\n"
             << "  -h, --help       Show this help message\n"
             << "  -v, --version    Show Version\n"
@@ -19,11 +20,17 @@ void Terminal::showHelp() {
             << "  -r [from] [to], --recover  Recovery\n"
             << " -----------------alarm------------------------\n"
             << "  -a/--alarm [from] [to] [bakname] [hour] [minute], Scheduled "
-               "backup\n";
+               "backup\n"
+            << " -----------------custom backup ------------------------\n"
+            << "  -b/--backup [from] [to] [bakname] -s [password] -z -c [configfilepath]\n"
+            << "\tthe format of the config file is like: \n"
+            << "\t[fileSize:value] [fileName:value] [fileUser:value] [fileType:value] [fileModifiedTime:value] [fileAuthority:value]\n";
 }
 void Terminal::showVersion() { std::cout << "CLI Tool Version 1.0\n"; }
-int main(int argc, char* argv[]) {
-  if (argc < 2) {
+int main(int argc, char *argv[])
+{
+  if (argc < 2)
+  {
     std::cerr
         << "Error: No arguments provided. Use --help for usage information.\n";
     return 1;
@@ -40,17 +47,30 @@ int main(int argc, char* argv[]) {
   std::string arg9 = (argv[9] == NULL) ? ("") : (argv[9]);
 
   Task task(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
-  if (arg1 == "-h" || arg1 == "--help") {
+  if (arg1 == "-h" || arg1 == "--help")
+  {
     Terminal::showHelp();
-  } else if (arg1 == "-v" || arg1 == "--version") {
+  }
+  else if (arg1 == "-v" || arg1 == "--version")
+  {
     Terminal::showVersion();
-  } else if (arg1 == "-b" || arg1 == "--backup") {
-    if (task.check_argv()) task.back_up();
-  } else if (arg1 == "-r" || arg1 == "--recover") {
-    if (task.check_argv()) task.recover();
-  } else if (arg1 == "-a" || arg1 == "--alarm") {
+  }
+  else if (arg1 == "-b" || arg1 == "--backup")
+  {
+    if (task.check_argv())
+      task.back_up();
+  }
+  else if (arg1 == "-r" || arg1 == "--recover")
+  {
+    if (task.check_argv())
+      task.recover();
+  }
+  else if (arg1 == "-a" || arg1 == "--alarm")
+  {
     task.alarm();
-  } else {
+  }
+  else
+  {
     std::cerr << "Unknown option: " << arg1
               << "\nUse --help for usage information.\n";
     return 1;

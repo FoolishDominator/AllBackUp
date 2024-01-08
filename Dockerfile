@@ -12,7 +12,7 @@ ENV TZ="Asia/Shanghai"
 # 构建环境
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 RUN apt update
-RUN apt install -y build-essential cmake libssl-dev zlib1g-dev
+RUN apt install -y build-essential cmake libssl-dev zlib1g-dev graphviz
 
 # 编译安装
 RUN rm -rf build && mkdir build

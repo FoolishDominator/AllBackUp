@@ -25,3 +25,5 @@ sudo docker build -t allbackup .
 ```shell
 sudo docker run -it --name backuptest allbackup /bin/bash
 ```
+## 使用说明
+安装完成后键入`allbackup -h`查看详细说明
