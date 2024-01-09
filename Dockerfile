@@ -15,6 +15,7 @@ RUN apt update
 RUN apt install -y build-essential cmake libssl-dev zlib1g-dev git
 
 # 安装gtest
+RUN git clone https://github.com/google/googletest.git
 RUN cd googletest && mkdir build && cd build && cmake .. && make
 RUN cd googletest && cp -r googletest/include/* /usr/include && cp -r googlemock/include/* /usr/include && cp -r build/lib/* /usr/lib
 

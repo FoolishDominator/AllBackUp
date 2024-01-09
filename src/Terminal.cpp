@@ -26,7 +26,7 @@ void Terminal::showHelp()
             << "\tthe format of the config file is like: \n"
             << "\t[fileSize:value] [fileName:value] [fileUser:value] [fileType:value] [fileModifiedTime:value] [fileAuthority:value]\n";
 }
-void Terminal::showVersion() { std::cout << "CLI Tool Version 1.0\n"; }
+void Terminal::showVersion() { std::cout << "allbackup Software Version 1.0\n"; }
 int main(int argc, char *argv[])
 {
   if (argc < 2)
