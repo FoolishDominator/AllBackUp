@@ -29,11 +29,7 @@ class Task {
         arg7(arg7),
         arg8(arg8),
         arg9(arg9){};
-  bool check_argv();
-  void back_up();
-  void recover();
   void alarm();
-  void zip();
 };
 
 #endif

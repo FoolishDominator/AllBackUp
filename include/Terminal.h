@@ -5,7 +5,6 @@
 #include <string>
 class Terminal {
  public:
-  static void showHelp();
   static void showVersion();
   static void error(std::string str);
 };

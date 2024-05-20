@@ -17,15 +17,14 @@ void Zip::zip() {
 }
 void Zip::unzip() {
   char input[1024];
+  char output[2048];
   uLong blen;
   uLong llen;
   while (1) {
     if (read(from_fd, &llen, sizeof(llen)) <= 0) break;
     read(from_fd, &blen, sizeof(blen));
     read(from_fd, input, blen);
-    char* output = (char*)malloc(llen);
     uncompress((Bytef*)output, &llen, (Bytef*)input, blen);
     write(to_fd, output, (size_t)llen);
-    free(output);
   }
 }

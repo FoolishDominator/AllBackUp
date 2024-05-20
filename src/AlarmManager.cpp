@@ -32,7 +32,6 @@ void Alarm::handle_sigalrm(int sig) {
     argv7 = "-z";
   }
   Task task(argv1, argv2, argv3, argv4, argv5, argv6, argv7, argv8, argv9);
-  if (task.check_argv()) task.back_up();
 
   std::string file_path;
   if (instance->password != "" && instance->need_zip) {
