@@ -27,51 +27,56 @@ int main(int argc, char* argv[]) {
   app.footer("--------------------@Kita@--------------------------");
   // Version
   bool verbose = false;
-  auto opt_v = app.add_flag("-v,--verbose", verbose, "Enable verbose output");
+  auto opt_v = app.add_flag("-v,--verbose", verbose, "Check Version");
   // Backup
   bool backup = false;
-  auto opt_b = app.add_flag("-b,--backup", backup, "Start Backup");
+  auto opt_b = app.add_flag("-b,--backup", backup, "Backup");
   std::string bakname, bakDirPath, bakSavePath, confPath, password;
-  auto filename_opt =
-      app.add_option("--bakname", bakname, "Specify the bakname")
-          ->needs("-b")
-
-          ->group("-b");
+  auto filename_opt = app.add_option("--bakname", bakname,
+                                     "[Required]Specify the bakname,if you "
+                                     "input xxx,the bakfile will be xxx.bak")
+                          ->needs("-b")
+                          ->group("-b");
   auto originPath_opt =
-      app.add_option("--bakDirPath", bakDirPath, "Specify the original path")
+      app.add_option(
+             "--bakDirPath", bakDirPath,
+             "[Required]Specify the bak dir path,which you want to backup")
           ->needs("-b")
-
           ->check(CLI::ExistingDirectory)
           ->group("-b");
   auto targetPath_opt =
-      app.add_option("--bakSavePath", bakSavePath, "Specify the target path")
+      app.add_option("--bakSavePath", bakSavePath,
+                     "[Required]Specify the bak save path,where you want to "
+                     "save the xxx.bak")
           ->needs("-b")
-
           ->check(CLI::ExistingDirectory)
           ->group("-b");
-  auto confPath_opt =
-      app.add_option("--config", confPath, "Specify the config path")
-          ->needs("-b")
-          ->check(CLI::ExistingFile)
-          ->group("-b");
+  auto confPath_opt = app.add_option("--config", confPath,
+                                     "[Optional]Specify the config file path")
+                          ->needs("-b")
+                          ->check(CLI::ExistingFile)
+                          ->group("-b");
   auto password_opt =
-      app.add_option("--password", password, "Specify the password to encrypt")
+      app.add_option("--password", password,
+                     "[Optional]Specify the password to encrypt")
           ->needs("-b")
           ->group("-b");
   // recover
   bool rec = false;
-  auto opt_r = app.add_flag("-r,--recover", rec, "Start Recovery");
+  auto opt_r = app.add_flag("-r,--recover", rec, "Recovery");
   std::string recFilePath, recSavePath;
   auto recname_opt =
-      app.add_option("--recFilePath", recFilePath, "Specify the recFilePath")
+      app.add_option("--recFilePath", recFilePath,
+                     "Specify the recFilePath---the path of xxx.bak")
           ->needs("-r")
-
+          ->check(CLI::ExistingFile)
           ->group("-r");
-  auto recPath_opt =
-      app.add_option("--recSavePath", recSavePath, "Specify the recSavePath")
-          ->needs("-r")
-
-          ->group("-r");
+  auto recPath_opt = app.add_option("--recSavePath", recSavePath,
+                                    "Specify the recSavePath---need a empty "
+                                    "dir,where you can recover the files")
+                         ->needs("-r")
+                         ->check(CLI::ExistingDirectory)
+                         ->group("-r");
   // parse
   CLI11_PARSE(app, argc, argv);
 
